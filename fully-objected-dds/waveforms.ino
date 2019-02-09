@@ -115,10 +115,8 @@
           
       }
 
-      // amplitude adjustment
-      //if (amplitude != this->currentAmplitude) {
+      // software amplitude adjustment
       this->waveformSoftwareAmplitudePercent(amplitude);
-      //this->currentAmplitude = amplitude;
-      //}
+  
     }
     
