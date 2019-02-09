@@ -169,14 +169,6 @@
       lcd.print(amplitudeString + "% ");
     }
     ///////////////////
-    /*
-      void SGEN_Display::clearActive() {
-      for (int i = 0; i < sizeof(assocCoords); i++) {
-        lcd.setCursor(assocCoords[i][0] - 1, assocCoords[i][1]);
-        lcd.print(" ");
-      }
-      }
-    */
     /////////////////////////    /////////////////////////    /////////////////////////
     // markers and selections
     /////////////////////////    /////////////////////////    /////////////////////////
@@ -333,18 +325,6 @@
     /////////////////////////    /////////////////////////    /////////////////////////
     // main display governors
     /////////////////////////    /////////////////////////    /////////////////////////
-    /* deprec
-      void displayAll() {
-      this->displayWavetype();
-      this->displaySoftFrequency();
-      this->displayStatus();
-      this->displayAmplitude();
-      this->displaySelected();
-      this->displayHighlighted();
-      this->displayOffset();
-      lcdRedrawFlag = false;
-      }
-    */
     ///////////////////
     void SGEN_Display::displaySelective() {
       this->syncScreenContents();
