@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    /////////////////////////    /////////////////////////    /////////////////////////
 // SETTINGS
 /////////////////////////////////////////////////////////////////////////////////////
-
+// LCD settings
 #define LCD_PIN_D4 PB4
 #define LCD_PIN_D5 PB5
 #define LCD_PIN_D6 PB6
@@ -9,31 +9,31 @@
 #define LCD_PIN_RS 0 // PB0
 #define LCD_PIN_EN 1 // PB1
 //
-//
+// DDS and HS output pins/ports
 #define DDS_PORT PORTC
 #define PWM_HS_PIN 13 // (PD5)
-#define ADC_BATTERY_SENSE_PIN 31
-#define ADC_BATTERY_SENSE_SMOOTH 20
-#define SGEN_OUTPUT_DISABLE_PIN 24
 //
+// encoder pins
 #define ENCODER_PIN_1 15
 #define ENCODER_PIN_2 10
 #define ENCODER_SET_PIN_1 11
 //
+// encoder actions
 #define ACTION_ENCODER_MOVED 0
 #define ACTION_ENCODER_SET 1
 //
+// battery sensing LI-ION
 #define BATTERY_VOLTAGE_TOP 4.1
 #define BATTERY_VOLTAGE_LOWEST 2.9
+#define ADC_BATTERY_SENSE_PIN 31
+#define ADC_BATTERY_SENSE_SMOOTH 20
 #define ATMEGA_VOLTAGE 5
+//
+// frequency adjustment
 #define FREQUENCY_TO_STEP 20 // may need adjustment!
 #define ATMEGA_FREQUENCY_MHZ 20 // may need adjustment!
 //
-//#define VOLTAGE_SENSE_PIN_1 1
-//#define OUTPUT_ENABLE_PIN 8
-//
 // values array indexes
-
 #define WAVETYPE_IDX 0
 #define FREQUENCY_IDX 1
 #define OUTPUTSTATE_IDX 2
@@ -42,10 +42,8 @@
 #define FAST_PWM 5
 #define DUTYCYCLE_IDX 4
 #define SWEEP_IDX 7
-
-
+//
 // waveform indexes
-
 #define SINUS 0
 #define SAWTOOTH 1
 #define SAWTOOTH_INVERSE 2
@@ -53,14 +51,17 @@
 #define ECG 4
 #define NOISE 5
 #define TRIANG 6
-// 
+//
+// output voltage peak-to peak 
 #define MAXIMUM_OUTPUT_AMPLITUDE_PEAK_V 5
+// offset voltage - disabled in portable version
 #define MAXIMUM_OFFSET_VOLTAGE 5
-#define ATTEN_PRC50_PORT 24
-#define ATTEN_PRC12_PORT 25
-#define ATTEN_PRC06_PORT 26
-#define ATTEN_PRC03_PORT 27
-#define ATTEN_PRC01_PORT 28
+//
+// attenuation
+#define SGEN_OUTPUT_DISABLE_PIN 24
+#define ATTEN_PIN_BY8 25
+#define ATTEN_PIN_BY4 26
+#define ATTEN_PIN_BY2 27
 //
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    /////////////////////////    /////////////////////////    /////////////////////////
@@ -360,9 +361,9 @@ class SGEN_Values {
     volatile uint8_t activeRegulationOnValue = 0;
     uint8_t actives = 6;
     uint8_t attenuators[3][2] = {
-      {27, 2},
-      {26, 4},
-      {25, 8},
+      {ATTEN_PIN_BY2, 2},
+      {ATTEN_PIN_BY4, 4},
+      {ATTEN_PIN_BY8, 8},
     };
     uint8_t registeredAttenuatorsNo = 3;
   public:
@@ -447,7 +448,6 @@ class SGEN_Display {
     /////////////////////////    /////////////////////////    /////////////////////////
     void displayWavetype();
     /////////////////////////
-    //
     void displaySoftFrequency();
     ///////////////////
     void displayStatus();
@@ -462,14 +462,6 @@ class SGEN_Display {
     ///////////////////
     void displayDutyCycle();
     ///////////////////
-    /*
-      void SGEN_Display::clearActive() {
-      for (int i = 0; i < sizeof(assocCoords); i++) {
-        lcd.setCursor(assocCoords[i][0] - 1, assocCoords[i][1]);
-        lcd.print(" ");
-      }
-      }
-    */
     /////////////////////////    /////////////////////////    /////////////////////////
     // markers and selections
     /////////////////////////    /////////////////////////    /////////////////////////
@@ -511,19 +503,6 @@ class SGEN_Display {
     /////////////////////////    /////////////////////////    /////////////////////////
     // main display governors
     /////////////////////////    /////////////////////////    /////////////////////////
-    /* deprec
-      void displayAll() {
-      this->displayWavetype();
-      this->displaySoftFrequency();
-      this->displayStatus();
-      this->displayAmplitude();
-      this->displaySelected();
-      this->displayHighlighted();
-      this->displayOffset();
-      lcdRedrawFlag = false;
-      }
-    */
-    ///////////////////
     void displaySelective();
     //String fillBlank(int startEndCoord[], String data);
 };
