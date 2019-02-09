@@ -10,23 +10,6 @@
       }
     }
     /////////////////////////
-    /*
-    void SGEN_Waveforms::waveformDDSGenerate2(uint32_t frequency) {
-      uint16_t stepV = uint16_t(frequency / FREQUENCY_TO_STEP);
-      uint16_t counter = 0;
-      uint16_t cont = 0;
-
-      while (1) {
-        counter += stepV;
-        DDS_PORT = this->waveform[counter >> 8];
-        cont++;
-        if (cont == 65535) {
-          return;
-        }
-      }
-    }
-    */
-    /////////////////////////
     uint16_t SGEN_Waveforms::hardwareFrequencyToCounts(int32_t frequency) {
       uint16_t counts = uint16_t(float(123.457 / frequency * 65535 * ATMEGA_FREQUENCY_MHZ / 16));
       // 65535 counts = 8ms = 123.457Hz
